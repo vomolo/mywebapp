@@ -3,10 +3,19 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"html/template"
 )
 
+type Data struct{
+	Title string 
+	Message string 
+} 
+
+var tmpl = template.Must(template.ParseFiles("templates/index.html"))
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the home page!")
+	data := Data{Title:"Home Page Title", Message:"Welcome Home!"}
+	tmpl.ExecuteTemplate(w,"index.html",&data)
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
